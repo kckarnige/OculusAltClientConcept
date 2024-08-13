@@ -138,6 +138,6 @@ public class NM
     }
 
     // ### Make it easier to use ###
-    public static nint GetModernIcon(string iconHere) => (nint)NativeMethods.GetModernIcon((NativeMethods.SHSTOCKICONID)Enum.Parse(typeof(NativeMethods.SHSTOCKICONID), iconHere));
+    public static nint GetModernIcon(string iconHere) => (nint)GetModernIcon((SHSTOCKICONID)Enum.Parse(typeof(SHSTOCKICONID), iconHere));
 }
 
