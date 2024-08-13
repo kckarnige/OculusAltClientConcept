@@ -160,7 +160,7 @@ static class Program
 
     static void CheckConfig()
     {
-        if (System.IO.File.Exists("OculusDash.exe") == false)
+        if (System.IO.Directory.Exists("..\\oculus-client") == false)
         {
             try
             {
