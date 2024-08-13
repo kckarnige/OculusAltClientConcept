@@ -1,4 +1,4 @@
-﻿namespace OculusKillSwitch;
+﻿namespace OculusDummy;
 
 using System;
 using System.IO;
@@ -54,22 +54,22 @@ static class Program
     static void MakeShortcut()
     {
         var parser = new FileIniDataParser();
-        IniData configdata = parser.ReadFile("OculusKillSwitch.ini");
+        IniData configdata = parser.ReadFile("OculusDummy.ini");
         var desktopFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
         var shell = new WshShell();
-        var shortCutLinkFilePath = desktopFolderPath + "\\Oculus Kill Switch.lnk";
+        var shortCutLinkFilePath = desktopFolderPath + "\\Oculus Dummy.lnk";
 
         string[] fileArray = Directory.GetFiles(desktopFolderPath);
         List<string> fileHashList = new();
         try
         {
-            if (configdata["OculusKillSwitch"]["DontShowShortcutDialog"] != "true")
+            if (configdata["OculusDummy"]["DontShowShortcutDialog"] != "true")
             {
                 using (TaskDialog dialog = new TaskDialog())
                 {
                     TaskDialogButton butYes = new TaskDialogButton(ButtonType.Yes);
                     TaskDialogButton butNo = new TaskDialogButton(ButtonType.No);
-                    dialog.WindowTitle = "Oculus Kill Switch";
+                    dialog.WindowTitle = "Oculus Dummy";
                     dialog.Content = "Do you want me to make a desktop shortcut?";
                     dialog.MainIcon = TaskDialogIcon.Custom;
                     dialog.CustomMainIcon = Icon.FromHandle(NM.GetModernIcon("SIID_HELP"));
@@ -80,18 +80,18 @@ static class Program
                     TaskDialogButton result = dialog.ShowDialog();
                     if (dialog.IsVerificationChecked && result == butNo)
                     {
-                        configdata["OculusKillSwitch"]["DontShowShortcutDialog"] = "true";
-                        parser.WriteFile("OculusKillSwitch.ini", configdata);
+                        configdata["OculusDummy"]["DontShowShortcutDialog"] = "true";
+                        parser.WriteFile("OculusDummy.ini", configdata);
                     }
                     if (result == butYes)
                     {
-                        configdata["OculusKillSwitch"]["DontShowShortcutDialog"] = "true";
+                        configdata["OculusDummy"]["DontShowShortcutDialog"] = "true";
                         var windowsApplicationShortcut = (IWshShortcut)shell.CreateShortcut(shortCutLinkFilePath);
                         windowsApplicationShortcut.Description = "Toggle Oculus Killer and play your Oculus games.";
                         windowsApplicationShortcut.WorkingDirectory = Application.StartupPath;
                         windowsApplicationShortcut.TargetPath = Application.ExecutablePath;
                         windowsApplicationShortcut.Save();
-                        parser.WriteFile("OculusKillSwitch.ini", configdata);
+                        parser.WriteFile("OculusDummy.ini", configdata);
                     }
                 }
             }
@@ -108,22 +108,22 @@ static class Program
     static void MakeShortcutStartMenu()
     {
         var parser = new FileIniDataParser();
-        IniData configdata = parser.ReadFile("OculusKillSwitch.ini");
+        IniData configdata = parser.ReadFile("OculusDummy.ini");
         var startFolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu), "Programs");
         var shell = new WshShell();
-        var shortCutLinkFilePath = startFolderPath + "\\Oculus Kill Switch.lnk";
+        var shortCutLinkFilePath = startFolderPath + "\\Oculus Dummy.lnk";
 
         string[] fileArray = Directory.GetFiles(startFolderPath);
         List<string> fileHashList = new();
         try
         {
-            if (configdata["OculusKillSwitch"]["DontShowStartShortcutDialog"] != "true")
+            if (configdata["OculusDummy"]["DontShowStartShortcutDialog"] != "true")
             {
                 using (TaskDialog dialog = new TaskDialog())
                 {
                     TaskDialogButton butYes = new TaskDialogButton(ButtonType.Yes);
                     TaskDialogButton butNo = new TaskDialogButton(ButtonType.No);
-                    dialog.WindowTitle = "Oculus Kill Switch";
+                    dialog.WindowTitle = "Oculus Dummy";
                     dialog.Content = "Do you want me to make a start menu shortcut?\n(You'll need to remove the shortcut manually.)";
                     dialog.MainIcon = TaskDialogIcon.Custom;
                     dialog.CustomMainIcon = Icon.FromHandle(NM.GetModernIcon("SIID_HELP"));
@@ -134,18 +134,18 @@ static class Program
                     TaskDialogButton result = dialog.ShowDialog();
                     if (dialog.IsVerificationChecked && result == butNo)
                     {
-                        configdata["OculusKillSwitch"]["DontShowStartShortcutDialog"] = "true";
-                        parser.WriteFile("OculusKillSwitch.ini", configdata);
+                        configdata["OculusDummy"]["DontShowStartShortcutDialog"] = "true";
+                        parser.WriteFile("OculusDummy.ini", configdata);
                     }
                     if (result == butYes)
                     {
-                        configdata["OculusKillSwitch"]["DontShowStartShortcutDialog"] = "true";
+                        configdata["OculusDummy"]["DontShowStartShortcutDialog"] = "true";
                         var windowsApplicationShortcut = (IWshShortcut)shell.CreateShortcut(shortCutLinkFilePath);
                         windowsApplicationShortcut.Description = "Toggle Oculus Killer and play your Oculus games.";
                         windowsApplicationShortcut.WorkingDirectory = Application.StartupPath;
                         windowsApplicationShortcut.TargetPath = Application.ExecutablePath;
                         windowsApplicationShortcut.Save();
-                        parser.WriteFile("OculusKillSwitch.ini", configdata);
+                        parser.WriteFile("OculusDummy.ini", configdata);
                     }
                 }
             }
@@ -164,9 +164,9 @@ static class Program
         {
             try
             {
-                Process.Start("explorer.exe", GetOculusBaseDirectory().FullName + "Support\\oculus-dash\\dash\\bin");
+                Process.Start("explorer.exe", GetOculusBaseDirectory().FullName + "Support\\oculus-client");
 
-                DialogResult nuhuhbox = MessageBox.Show("I'm not in the right directory, I go here.\nAfter I close, would you please move me?", "Oculus Kill Switch", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                DialogResult nuhuhbox = MessageBox.Show("I'm not in the right directory, I go here.\nAfter I close, would you please move me?", "Oculus Dummy", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 if (nuhuhbox == DialogResult.OK)
                 {
                     Console.WriteLine("WRONG LOCATION/DASH NOT PRESENT");
@@ -176,7 +176,7 @@ static class Program
             catch (Exception x)
             {
                 Process.Start("explorer.exe", @"https://www.oculus.com/download_app/?id=1582076955407037");
-                DialogResult Dialog1 = MessageBox.Show("Looks like you've never installed the Oculus Software, please install Oculus Software before using this program, ya goof.", "Oculus Kill Switch", MessageBoxButtons.OK);
+                DialogResult Dialog1 = MessageBox.Show("Looks like you've never installed the Oculus Software, please install Oculus Software before using this program, ya goof.", "Oculus Dummy", MessageBoxButtons.OK);
                 if (Dialog1 == DialogResult.OK)
                 {
                     Console.WriteLine(x);
@@ -187,18 +187,18 @@ static class Program
         }
         else
         {
-            if (System.IO.File.Exists("OculusKillSwitch.ini") != true)
+            if (System.IO.File.Exists("OculusDummy.ini") != true)
             {
-                System.IO.File.Create("OculusKillSwitch.ini").Close();
+                System.IO.File.Create("OculusDummy.ini").Close();
             }
             var parser = new FileIniDataParser();
-            IniData configdata = parser.ReadFile("OculusKillSwitch.ini");
-            if (new FileInfo("OculusKillSwitch.ini").Length == 0)
+            IniData configdata = parser.ReadFile("OculusDummy.ini");
+            if (new FileInfo("OculusDummy.ini").Length == 0)
             {
-                configdata["OculusKillSwitch"]["IgnoreOculusClientOpen"] = "false";
-                configdata["OculusKillSwitch"]["DontShowShortcutDialog"] = "false";
-                configdata["OculusKillSwitch"]["IgnoreUpdate"] = "false";
-                parser.WriteFile("OculusKillSwitch.ini", configdata);
+                configdata["OculusDummy"]["IgnoreOculusClientOpen"] = "false";
+                configdata["OculusDummy"]["DontShowShortcutDialog"] = "false";
+                configdata["OculusDummy"]["IgnoreUpdate"] = "false";
+                parser.WriteFile("OculusDummy.ini", configdata);
             }
         }
 
@@ -207,21 +207,21 @@ static class Program
     static void CheckForUpdate()
     {
         var parser = new FileIniDataParser();
-        IniData configdata = parser.ReadFile("OculusKillSwitch.ini");
+        IniData configdata = parser.ReadFile("OculusDummy.ini");
         var startupFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
         var shell = new WshShell();
-        var shortCutLinkFilePath = startupFolderPath + "\\Oculus Kill Switch.lnk";
+        var shortCutLinkFilePath = startupFolderPath + "\\Oculus Dummy.lnk";
         string[] fileArray = Directory.GetFiles(startupFolderPath);
-        GithubUpdateCheck update = new GithubUpdateCheck("kckarnige", "OculusKillSwitch");
+        GithubUpdateCheck update = new GithubUpdateCheck("kckarnige", "OculusDummy");
         bool isUpdate = update.IsUpdateAvailable(getVersion(), VersionChange.Revision);
 
-        if (isUpdate && configdata["OculusKillSwitch"]["IgnoreUpdate"] != "true")
+        if (isUpdate && configdata["OculusDummy"]["IgnoreUpdate"] != "true")
         {
             using (TaskDialog dialog = new TaskDialog())
             {
                 TaskDialogButton butYes = new TaskDialogButton(ButtonType.Yes);
                 TaskDialogButton butNo = new TaskDialogButton(ButtonType.No);
-                dialog.WindowTitle = "Oculus Kill Switch";
+                dialog.WindowTitle = "Oculus Dummy";
                 dialog.Content = "Looks like there's a new update, wanna check it out?";
                 dialog.MainIcon = TaskDialogIcon.Information;
                 dialog.VerificationText = "Don't Show Again";
@@ -231,12 +231,12 @@ static class Program
                 TaskDialogButton result = dialog.ShowDialog();
                 if (dialog.IsVerificationChecked && result == butNo)
                 {
-                    configdata["OculusKillSwitch"]["IgnoreUpdate"] = "true";
-                    parser.WriteFile("OculusKillSwitch.ini", configdata);
+                    configdata["OculusDummy"]["IgnoreUpdate"] = "true";
+                    parser.WriteFile("OculusDummy.ini", configdata);
                 }
                 if (result == butYes)
                 {
-                    Process.Start("explorer.exe", @"https://github.com/kckarnige/OculusKillSwitch");
+                    Process.Start("explorer.exe", @"https://github.com/kckarnige/OculusDummy");
                     Application.Exit();
                 }
             }
@@ -253,7 +253,7 @@ static class Program
         Process[] OculusAppCheck = Process.GetProcessesByName("OculusClient");
 
         var parser = new FileIniDataParser();
-        IniData configdata = parser.ReadFile("OculusKillSwitch.ini");
+        IniData configdata = parser.ReadFile("OculusDummy.ini");
 
         if (DashCheck.Length > 0 != true && SteamVRCheck.Length > 0 != true)
         {
@@ -263,8 +263,8 @@ static class Program
             try
             {
                 activeFileHash = GetMD5Hash("OculusDash.exe");
-                configdata["OculusKillSwitch"]["OculusDashExecHash"] = activeFileHash;
-                parser.WriteFile("OculusKillSwitch.ini", configdata);
+                configdata["OculusDummy"]["OculusDashExecHash"] = activeFileHash;
+                parser.WriteFile("OculusDummy.ini", configdata);
                 MakeShortcutStartMenu();
                 MakeShortcut();
                 try
@@ -277,13 +277,13 @@ static class Program
                 {
                     if (activeFileHash == "9DB7CC8B646A01C60859B318F85E65D0")
                     {
-                        MessageBox.Show("Oculus Dash backup couldn't be found. If it's in a different directory, move it here. If you don't have it, you may need to reinstall the Oculus app to get it back.", "Oculus Kill Switch", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Oculus Dash backup couldn't be found. If it's in a different directory, move it here. If you don't have it, you may need to reinstall the Oculus app to get it back.", "Oculus Dummy", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         whoops = true;
                         Console.WriteLine("NO BACKUP");
                     }
-                    else if (activeFileHash == configdata["OculusKillSwitch"]["OculusDashExecHash"])
+                    else if (activeFileHash == configdata["OculusDummy"]["OculusDashExecHash"])
                     {
-                        DialogResult Dialog1 = MessageBox.Show("Oculus Killer isn't installed, or the backup file has been renamed. Would you like for me to download it for you?", "Oculus Kill Switch", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                        DialogResult Dialog1 = MessageBox.Show("Oculus Killer isn't installed, or the backup file has been renamed. Would you like for me to download it for you?", "Oculus Dummy", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                         if (Dialog1 == DialogResult.Yes)
                         {
                             using (WebClient client = new WebClient())
@@ -294,7 +294,7 @@ static class Program
                         }
                         else
                         {
-                            MessageBox.Show("Oculus Killer needs to be installed for me to do my job.", "Oculus Kill Switch", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Oculus Killer needs to be installed for me to do my job.", "Oculus Dummy", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             whoops = true;
                             Console.WriteLine("NO KILLER");
                             Application.Exit();
@@ -302,11 +302,11 @@ static class Program
                     }
                     else
                     {
-                        DialogResult Dialog1 = MessageBox.Show("Looks like the Oculus Client updated since this was last ran, give me a sec to update the stored hash value for the Oculus Client.", "Oculus Kill Switch", MessageBoxButtons.OK);
+                        DialogResult Dialog1 = MessageBox.Show("Looks like the Oculus Client updated since this was last ran, give me a sec to update the stored hash value for the Oculus Client.", "Oculus Dummy", MessageBoxButtons.OK);
                         if (Dialog1 == DialogResult.OK)
                         {
-                            configdata["OculusKillSwitch"]["OculusDashExecHash"] = GetMD5Hash("OculusDash.exe");
-                            parser.WriteFile("OculusKillSwitch.ini", configdata);
+                            configdata["OculusDummy"]["OculusDashExecHash"] = GetMD5Hash("OculusDash.exe");
+                            parser.WriteFile("OculusDummy.ini", configdata);
                         }
                         else
                         {
@@ -325,14 +325,14 @@ static class Program
                 whoops = true;
                 Console.WriteLine("WRONG LOCATION/DASH NOT PRESENT");
             }
-            if (OculusAppCheck.Length > 0 == true && configdata["OculusKillSwitch"]["IgnoreOculusClientOpen"] != "true" && whoops == false)
+            if (OculusAppCheck.Length > 0 == true && configdata["OculusDummy"]["IgnoreOculusClientOpen"] != "true" && whoops == false)
             {
                 using (TaskDialog dialog = new TaskDialog())
                 {
                     TaskDialogButton butOK = new TaskDialogButton(ButtonType.Ok);
                     TaskDialogButton butCancel = new TaskDialogButton(ButtonType.Cancel);
                     dialog.VerificationText = "Don't Show Again";
-                    dialog.WindowTitle = "Oculus Kill Switch";
+                    dialog.WindowTitle = "Oculus Dummy";
                     dialog.Content = "For safety reasons, I'm here to warn you of switching while in VR because I can't detect anything but the Oculus Client being open.\n\nIf you just took off your headset to switch, please make sure to save your game before either closing or restarting (Recommended) the Oculus app.\nIf all you did was open the Oculus app, you may continue, otherwise, click 'Cancel' to close this prompt and come back after you saved your progress.";
                     dialog.MainIcon = TaskDialogIcon.Warning;
                     dialog.Buttons.Add(butOK);
@@ -341,8 +341,8 @@ static class Program
                     TaskDialogButton result = dialog.ShowDialog();
                     if (dialog.IsVerificationChecked)
                     {
-                        configdata["OculusKillSwitch"]["IgnoreOculusClientOpen"] = "true";
-                        parser.WriteFile("OculusKillSwitch.ini", configdata);
+                        configdata["OculusDummy"]["IgnoreOculusClientOpen"] = "true";
+                        parser.WriteFile("OculusDummy.ini", configdata);
                     }
                     if (result == butCancel)
                     {
@@ -368,7 +368,7 @@ static class Program
 
             if (whoops == false)
             {
-                Dialog0 = MessageBox.Show("Toggle Oculus Killer?\n" + "It's currently " + killerEnabled, "Oculus Kill Switch", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                Dialog0 = MessageBox.Show("Toggle Oculus Killer?\n" + "It's currently " + killerEnabled, "Oculus Dummy", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
             }
             else
             {
@@ -384,7 +384,7 @@ static class Program
                     System.IO.File.Move("OculusDash.exe.bak", "tempkill.exe");
                     System.IO.File.Move("OculusDash.exe", "OculusDash.exe.bak");
                     System.IO.File.Move("tempkill.exe", "OculusDash.exe");
-                    MessageBox.Show("Successfully enabled Oculus Killer!", "Oculus Kill Switch", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Successfully enabled Oculus Killer!", "Oculus Dummy", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
@@ -392,13 +392,13 @@ static class Program
                     System.IO.File.Move("OculusDash.exe.bak", "tempbak.exe");
                     System.IO.File.Move("OculusDash.exe", "OculusDash.exe.bak");
                     System.IO.File.Move("tempbak.exe", "OculusDash.exe");
-                    MessageBox.Show("Successfully disabled Oculus Killer!", "Oculus Kill Switch", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Successfully disabled Oculus Killer!", "Oculus Dummy", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
         else
         {
-            MessageBox.Show("Please exit VR before switching your dash.\nIf this issue persists, try restarting the Oculus app.\nSettings > Beta > Restart Oculus", "Oculus Kill Switch", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show("Please exit VR before switching your dash.\nIf this issue persists, try restarting the Oculus app.\nSettings > Beta > Restart Oculus", "Oculus Dummy", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }

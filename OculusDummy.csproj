@@ -10,6 +10,7 @@
     <ApplicationIcon>icon.ico</ApplicationIcon>
     <FileVersion></FileVersion>
     <AssemblyVersion>1.1.0</AssemblyVersion>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 
   <ItemGroup>
